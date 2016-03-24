@@ -1,0 +1,119 @@
+{
+    "id": "ibm.devops.services.pipeline.dra_mocha_junit",
+    "version": 1,
+    "name_key": "ExtName",
+    "desc_key": "ExtDesc",
+    "extension_type": "Test",
+    "message_key": "ExtMessage",
+    "inputs": [
+        {
+            "type": "Artifacts",
+            "inclusion" : "always"
+        }
+    ],
+    "params": [
+        {
+            "name": "COMMAND",
+            "type": "TextArea",
+            "required": "true",
+            "default_value" : "#!/bin/bash",
+            "label_key": "COMMAND_KEY",
+            "desc_key": "COMMAND_DESC"
+        },
+        {
+            "name": "ADVISORY_MODE",
+            "type": "Checkbox",
+            "required": "false",
+            "default_value": "false",
+            "label_key": "ADVISORY_MODE_KEY",
+            "desc_key": "ADVISORY_MODE_DESC"
+        },
+        {
+            "name": "TEST_LOG_FILE",
+            "type": "Text",
+            "required": "false",
+            "default_value": "",
+            "label_key": "TEST_LOG_FILE_KEY",
+            "desc_key": "TEST_LOG_FILE_DESC"
+        },
+        {
+            "name": "MINIMUM_SUCCESS_RATE",
+            "type": "Text",
+            "required": "false",
+            "default_value": "",
+            "label_key": "MINIMUM_SUCCESS_RATE_KEY",
+            "desc_key": "MINIMUM_SUCCESS_RATE_DESC"
+        },
+        {
+            "name": "CHECK_TEST_REGRESSION",
+            "type": "Checkbox",
+            "required": "false",
+            "default_value": "false",
+            "label_key": "CHECK_TEST_REGRESSION_KEY",
+            "desc_key": "CHECK_TEST_REGRESSION_DESC"
+        },
+        
+        
+        {
+            "name": "CRITICAL_TESTCASES",
+            "type": "Text",
+            "required": "false",
+            "default_value": "",
+            "label_key": "CRITICAL_TESTCASES_KEY",
+            "desc_key": "CRITICAL_TESTCASES_DESC"
+        }
+    ],
+    "outputs": [
+        {
+            "type": "Artifacts",
+            "inclusion" : "always"
+        },
+        {
+            "type": "Tests",
+            "inclusion": "optional"
+        }
+    ],
+    "execution": {
+        "type": "JenkinsDocker",
+        "shell": "#!/bin/bash
+
+set +x
+set +e 
+
+        
+
+export DRA_ADVISORY_MODE=#ADVISORY_MODE#
+export DRA_TEST_TOOL_SELECT=\"junit\"
+export DRA_TEST_LOG_FILE=#TEST_LOG_FILE#
+export DRA_MINIMUM_SUCCESS_RATE=#MINIMUM_SUCCESS_RATE#
+export DRA_CHECK_TEST_REGRESSION=#CHECK_TEST_REGRESSION#
+        
+export DRA_CRITICAL_TESTCASES=\"#CRITICAL_TESTCASES#\"
+
+        
+        
+function custom_cmd {
+    eval #COMMAND#
+    CMDRESULT=$?
+
+    if [ $CMDRESULT -ne 0 ]; then
+        exit 1
+    fi
+}
+    
+export -f custom_cmd        
+        
+        
+        
+. $EXT_DIR/execute.sh
+RESULT=$?
+        
+#if [ $RESULT -ne 0 ]; then
+if [ $RESULT -ne 0 ] && [ \"${DRA_ADVISORY_MODE}\" == \"false\" ]; then
+    exit 1
+fi
+    "},
+    "project": "https://hub.jazz.net/project/alchemy/Alchemy-Ostanes",
+    "project_example": "https://hub.jazz.net/pipeline/Osthanes/blazemeter_static",
+    "project_contact": "jparra@us.ibm.com"
+}

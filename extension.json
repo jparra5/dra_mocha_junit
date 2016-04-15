@@ -13,6 +13,56 @@
     ],
     "params": [
         {
+            "name": "LIFE_CYCLE_STAGE_SELECT",
+            "type": "Select",
+            "required": "true",
+            "default_value": "CODE",
+            "label_key": "LIFE_CYCLE_STAGE_SELECT_KEY",
+            "desc_key": "LIFE_CYCLE_STAGE_SELECT_DESC",
+            "options": [
+                {
+                    "label_key": "LIFE_CYCLE_STAGE_OPTION_1_KEY",
+                    "value": "code"
+                },
+                {
+                    "label_key": "LIFE_CYCLE_STAGE_OPTION_2_KEY",
+                    "value": "unittest"
+                },
+                { 
+                    "label_key": "LIFE_CYCLE_STAGE_OPTION_3_KEY",
+                    "value": "smoketest" 
+                },
+                { 
+                    "label_key": "LIFE_CYCLE_STAGE_OPTION_4_KEY",
+                    "value": "fvt" 
+                },
+                { 
+                    "label_key": "LIFE_CYCLE_STAGE_OPTION_5_KEY",
+                    "value": "monitoring" 
+                },
+                { 
+                    "label_key": "LIFE_CYCLE_STAGE_OPTION_6_KEY",
+                    "value": "deploy" 
+                },
+                { 
+                    "label_key": "LIFE_CYCLE_STAGE_OPTION_7_KEY",
+                    "value": "othertest" 
+                },
+                { 
+                    "label_key": "LIFE_CYCLE_STAGE_OPTION_8_KEY",
+                    "value": "codescan" 
+                },
+                { 
+                    "label_key": "LIFE_CYCLE_STAGE_OPTION_9_KEY",
+                    "value": "licensescan" 
+                },
+                { 
+                    "label_key": "LIFE_CYCLE_STAGE_OPTION_10_KEY",
+                    "value": "perftest" 
+                }
+            ]
+        },
+        {
             "name": "COMMAND",
             "type": "TextArea",
             "required": "true",
@@ -82,6 +132,7 @@ set +e
 
         
 
+export DRA_LIFE_CYCLE_STAGE_SELECT=#LIFE_CYCLE_STAGE_SELECT#
 export DRA_ADVISORY_MODE=#ADVISORY_MODE#
 export DRA_TEST_TOOL_SELECT=\"junit\"
 export DRA_TEST_LOG_FILE=#TEST_LOG_FILE#

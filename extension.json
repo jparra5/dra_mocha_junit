@@ -16,7 +16,7 @@
             "name": "LIFE_CYCLE_STAGE_SELECT",
             "type": "Select",
             "required": "true",
-            "default_value": "CODE",
+            "default_value": "code",
             "label_key": "LIFE_CYCLE_STAGE_SELECT_KEY",
             "desc_key": "LIFE_CYCLE_STAGE_SELECT_DESC",
             "options": [

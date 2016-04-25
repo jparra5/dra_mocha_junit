@@ -188,7 +188,7 @@ if [ $RESULT -eq 0 ]; then
 
         if [ -n "${DRA_MINIMUM_SUCCESS_RATE}" ] && [ "${DRA_MINIMUM_SUCCESS_RATE}" != " " ]; then
             name="At least ${DRA_MINIMUM_SUCCESS_RATE}% success in tests (${DRA_TEST_TOOL_SELECT})"
-            criteria="{ \"name\": \"$name\", \"conditions\": [ { \"eval\": \"_jUnitTestSuccessPercentage\", \"op\": \">=\", \"value\": ${DRA_MINIMUM_SUCCESS_RATE} } ] }"
+            criteria="{ \"name\": \"$name\", \"conditions\": [ { \"eval\": \"_jUnitTestSuccessPercentage\", \"op\": \">=\", \"value\": ${DRA_MINIMUM_SUCCESS_RATE}, \"forTool\": \"${DRA_TEST_TOOL_SELECT}\", \"forStage\": \"${DRA_LIFE_CYCLE_STAGE_SELECT}\" } ] }"
 
             #echo "criteria:  $criteria"
             criteriaList=("${criteriaList[@]}" "$criteria")
@@ -196,7 +196,7 @@ if [ $RESULT -eq 0 ]; then
 
         if [ -n "${DRA_CHECK_TEST_REGRESSION}" ] && [ "${DRA_CHECK_TEST_REGRESSION}" == "true" ]; then
             name="No regression in tests (${DRA_TEST_TOOL_SELECT})"
-            criteria="{ \"name\": \"$name\", \"conditions\": [ { \"eval\": \"_hasJUnitTestRegressed\", \"op\": \"=\", \"value\": false } ] }"
+            criteria="{ \"name\": \"$name\", \"conditions\": [ { \"eval\": \"_hasJUnitTestRegressed\", \"op\": \"=\", \"value\": false, \"forTool\": \"${DRA_TEST_TOOL_SELECT}\", \"forStage\": \"${DRA_LIFE_CYCLE_STAGE_SELECT}\" } ] }"
 
             #echo "criteria:  $criteria"
             criteriaList=("${criteriaList[@]}" "$criteria")
@@ -204,7 +204,7 @@ if [ $RESULT -eq 0 ]; then
 
         if [ -n "${DRA_CRITICAL_TESTCASES}" ] && [ "${DRA_CRITICAL_TESTCASES}" != " " ]; then
             name="No critical test failures (${DRA_TEST_TOOL_SELECT})"
-            criteria="{ \"name\": \"$name\", \"conditions\": [ { \"eval\": \"_hasJUnitCriticalTestsPassed(${DRA_CRITICAL_TESTCASES})\", \"op\": \"=\", \"value\": true } ] }"
+            criteria="{ \"name\": \"$name\", \"conditions\": [ { \"eval\": \"_hasJUnitCriticalTestsPassed(${DRA_CRITICAL_TESTCASES})\", \"op\": \"=\", \"value\": true, \"forTool\": \"${DRA_TEST_TOOL_SELECT}\", \"forStage\": \"${DRA_LIFE_CYCLE_STAGE_SELECT}\" } ] }"
 
             #echo "criteria:  $criteria"
             criteriaList=("${criteriaList[@]}" "$criteria")
